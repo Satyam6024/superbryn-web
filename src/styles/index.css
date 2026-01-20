@@ -1,0 +1,224 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles */
+:root {
+  --bg-primary: #0f0f0f;
+  --bg-secondary: #1a1a1a;
+  --bg-elevated: #252525;
+  --border-color: #333333;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --accent-primary: #6366f1;
+  --accent-success: #22c55e;
+  --accent-error: #ef4444;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
+
+/* Component styles */
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-250;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-bg;
+  }
+
+  .btn-primary {
+    @apply bg-accent-primary text-white hover:bg-indigo-600;
+    @apply focus:ring-accent-primary;
+  }
+
+  .btn-secondary {
+    @apply bg-dark-elevated text-white border border-dark-border;
+    @apply hover:bg-dark-surface focus:ring-gray-500;
+  }
+
+  .btn-danger {
+    @apply bg-accent-error text-white hover:bg-red-600;
+    @apply focus:ring-accent-error;
+  }
+
+  .card {
+    @apply bg-dark-surface border border-dark-border rounded-xl;
+    @apply transition-all duration-250;
+  }
+
+  .card-elevated {
+    @apply bg-dark-elevated shadow-lg;
+  }
+
+  .input {
+    @apply w-full px-4 py-2 bg-dark-elevated border border-dark-border rounded-lg;
+    @apply text-white placeholder-gray-500;
+    @apply focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-transparent;
+    @apply transition-all duration-250;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-gray-300 mb-1;
+  }
+}
+
+/* Avatar container */
+.avatar-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-elevated) 100%);
+}
+
+.avatar-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* State indicators */
+.state-indicator {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 9999px;
+  backdrop-filter: blur(8px);
+}
+
+.state-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.state-dot.listening {
+  @apply bg-green-500;
+  animation: pulse 1.5s infinite;
+}
+
+.state-dot.thinking {
+  @apply bg-yellow-500;
+  animation: pulse 0.8s infinite;
+}
+
+.state-dot.speaking {
+  @apply bg-blue-500;
+  animation: pulse 0.5s infinite;
+}
+
+.state-dot.idle {
+  @apply bg-gray-500;
+}
+
+/* Timeline styles */
+.timeline {
+  @apply space-y-3;
+}
+
+.timeline-item {
+  @apply card p-4 animate-slide-up;
+}
+
+.timeline-item.pending {
+  @apply border-l-4 border-l-yellow-500;
+}
+
+.timeline-item.completed {
+  @apply border-l-4 border-l-green-500;
+}
+
+.timeline-item.failed {
+  @apply border-l-4 border-l-red-500;
+}
+
+/* Transcript styles */
+.transcript {
+  @apply space-y-2 overflow-y-auto;
+}
+
+.transcript-message {
+  @apply p-3 rounded-lg animate-fade-in;
+}
+
+.transcript-message.user {
+  @apply bg-accent-primary/20 ml-8;
+}
+
+.transcript-message.assistant {
+  @apply bg-dark-elevated mr-8;
+}
+
+/* Loading states */
+.loading-pulse {
+  @apply animate-pulse bg-dark-elevated rounded;
+}
+
+.loading-spinner {
+  @apply w-6 h-6 border-2 border-accent-primary border-t-transparent rounded-full animate-spin;
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .split-view {
+    @apply flex-col;
+  }
+
+  .avatar-section {
+    @apply h-64;
+  }
+}
