@@ -146,7 +146,7 @@ export function Controls({
       </AnimatePresence>
 
       {/* Connection status indicator */}
-      {(isConnecting || connectionState === 'reconnecting') && (
+      {isConnecting && (
         <motion.div
           className="flex items-center justify-center gap-2 mt-4"
           initial={{ opacity: 0 }}

@@ -7,9 +7,7 @@ import {
   Room,
   RoomEvent,
   ConnectionState as LKConnectionState,
-  DataPacket_Kind,
   RemoteParticipant,
-  Participant,
 } from 'livekit-client';
 import { useConversation } from '../context/ConversationContext';
 import { api } from '../services/api';
@@ -64,7 +62,7 @@ export function useLiveKit(): UseLiveKitReturn {
 
   // Handle data messages from agent
   const handleDataReceived = useCallback(
-    (payload: Uint8Array, participant?: RemoteParticipant) => {
+    (payload: Uint8Array, _participant?: RemoteParticipant) => {
       try {
         const decoder = new TextDecoder();
         const data = JSON.parse(decoder.decode(payload));

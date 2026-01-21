@@ -94,7 +94,7 @@ export function Timeline({ toolCalls, showTechnical, onToggleTechnical }: Timeli
               {showTechnical && toolCall.technical && (
                 <div className="mt-2 space-y-2">
                   {/* Parameters */}
-                  {Object.keys(toolCall.technical.params).length > 0 && (
+                  {toolCall.technical.params && Object.keys(toolCall.technical.params).length > 0 && (
                     <div>
                       <span className="text-xs text-gray-500 uppercase tracking-wide">
                         Parameters
@@ -106,7 +106,7 @@ export function Timeline({ toolCalls, showTechnical, onToggleTechnical }: Timeli
                   )}
 
                   {/* Result */}
-                  {toolCall.technical.result && (
+                  {toolCall.technical.result !== undefined && toolCall.technical.result !== null && (
                     <div>
                       <span className="text-xs text-gray-500 uppercase tracking-wide">
                         Result
