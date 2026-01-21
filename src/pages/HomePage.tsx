@@ -15,7 +15,7 @@ export function HomePage() {
   const [phone, setPhone] = useState('');
   const [history, setHistory] = useState<ConversationSummary[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  // const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   // Check for saved phone and load history
   useEffect(() => {

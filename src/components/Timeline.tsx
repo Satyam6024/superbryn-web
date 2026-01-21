@@ -25,14 +25,7 @@ const statusColors: Record<string, string> = {
   failed: 'border-l-red-500 bg-red-500/5',
 };
 
-// export const hasObjectContent = (value: unknown): boolean =>
-//   !!value &&
-//   typeof value === "object" &&
-//   !Array.isArray(value) &&
-//   Object.keys(value as object).length > 0;
-
 export function Timeline({ toolCalls, showTechnical, onToggleTechnical }: TimelineProps) {
-  
   if (toolCalls.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-full py-8 text-gray-500">
@@ -70,12 +63,7 @@ export function Timeline({ toolCalls, showTechnical, onToggleTechnical }: Timeli
       {/* Timeline items */}
       <div className="timeline flex-1 overflow-y-auto pr-2">
         <AnimatePresence mode="popLayout">
-          {toolCalls.map((toolCall, index) => {
-            // const hasParams =
-            // toolCall?.technical?.params &&
-            // typeof toolCall.technical.params === "object" &&
-            // Object.keys(toolCall.technical.params).length > 0;
-            return(
+          {toolCalls.map((toolCall, index) => (
             <motion.div
               key={`${toolCall.timestamp}-${index}`}
               className={`timeline-item card p-4 mb-3 border-l-4 ${statusColors[toolCall.status]}`}
@@ -106,19 +94,19 @@ export function Timeline({ toolCalls, showTechnical, onToggleTechnical }: Timeli
               {showTechnical && toolCall.technical && (
                 <div className="mt-2 space-y-2">
                   {/* Parameters */}
-                  {/* {hasObjectContent(toolCall?.technical?.params)&& (
+                  {Object.keys(toolCall.technical.params).length > 0 && (
                     <div>
                       <span className="text-xs text-gray-500 uppercase tracking-wide">
                         Parameters
                       </span>
                       <pre className="mt-1 text-xs bg-dark-bg p-2 rounded overflow-x-auto">
-                        
+                        {JSON.stringify(toolCall.technical.params, null, 2)}
                       </pre>
                     </div>
-                  )} */}
+                  )}
 
                   {/* Result */}
-                  {/* {toolCall.technical.result && (
+                  {toolCall.technical.result && (
                     <div>
                       <span className="text-xs text-gray-500 uppercase tracking-wide">
                         Result
@@ -127,7 +115,7 @@ export function Timeline({ toolCalls, showTechnical, onToggleTechnical }: Timeli
                         {JSON.stringify(toolCall.technical.result, null, 2)}
                       </pre>
                     </div>
-                  )} */}
+                  )}
                 </div>
               )}
 
@@ -138,9 +126,7 @@ export function Timeline({ toolCalls, showTechnical, onToggleTechnical }: Timeli
                 </div>
               )}
             </motion.div>
-
-            )
-          })}
+          ))}
         </AnimatePresence>
       </div>
     </div>
