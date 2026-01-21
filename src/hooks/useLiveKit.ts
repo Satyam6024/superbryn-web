@@ -109,9 +109,12 @@ export function useLiveKit(): UseLiveKitReturn {
 
     try {
       // Get token from backend
+      console.log('Fetching token from API...');
       const tokenResponse = await api.getToken();
+      console.log('Token received:', tokenResponse.room_name);
 
       // Create room instance
+      console.log('Creating LiveKit room...');
       const newRoom = new Room({
         adaptiveStream: true,
         dynacast: true,
@@ -147,10 +150,19 @@ export function useLiveKit(): UseLiveKitReturn {
       });
 
       // Connect to the room
+      console.log('Connecting to LiveKit:', LIVEKIT_URL);
       await newRoom.connect(LIVEKIT_URL, tokenResponse.token);
+      console.log('Connected to LiveKit room!');
 
-      // Enable local audio
-      await newRoom.localParticipant.setMicrophoneEnabled(true);
+      // Enable local audio (wrapped in try-catch to handle permission issues)
+      try {
+        console.log('Enabling microphone...');
+        await newRoom.localParticipant.setMicrophoneEnabled(true);
+        console.log('Microphone enabled!');
+      } catch (micError) {
+        console.warn('Microphone access failed:', micError);
+        // Continue without microphone - text fallback will be available
+      }
 
       setRoom(newRoom);
       setRoomConfig(tokenResponse);
