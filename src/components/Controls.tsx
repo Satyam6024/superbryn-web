@@ -26,6 +26,7 @@ export function Controls({
 
   const isConnected = connectionState === 'connected';
   const isConnecting = connectionState === 'connecting' || connectionState === 'reconnecting';
+  const connection = connectionState = "reconnecting";
 
   const handleResetClick = () => {
     setShowResetConfirm(true);
@@ -146,7 +147,7 @@ export function Controls({
       </AnimatePresence>
 
       {/* Connection status indicator */}
-      {(isConnecting || connectionState === 'reconnecting') && (
+      {(isConnecting || connection === 'reconnecting') && (
         <motion.div
           className="flex items-center justify-center gap-2 mt-4"
           initial={{ opacity: 0 }}
@@ -154,7 +155,7 @@ export function Controls({
         >
           <div className="loading-spinner w-4 h-4" />
           <span className="text-sm text-gray-400">
-            {connectionState === 'reconnecting' ? 'Reconnecting...' : 'Connecting...'}
+            {connection === 'reconnecting' ? 'Reconnecting...' : 'Connecting...'}
           </span>
         </motion.div>
       )}
