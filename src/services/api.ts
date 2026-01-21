@@ -10,14 +10,16 @@ import type {
   AppointmentsListResponse,
 } from '../types';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+// Remove trailing slash from URL if present
+const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8080').replace(/\/$/, '');
 
 class ApiService {
   private baseUrl: string;
   private adminPassword: string | null = null;
 
   constructor(baseUrl: string = API_BASE_URL) {
-    this.baseUrl = baseUrl;
+    // Remove trailing slash to prevent double-slash issues
+    this.baseUrl = baseUrl.replace(/\/$/, '');
   }
 
   private async request<T>(
