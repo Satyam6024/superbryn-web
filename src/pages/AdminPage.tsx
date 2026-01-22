@@ -48,6 +48,7 @@ export function AdminPage() {
       const result = await api.adminAuth(password);
       if (result.authenticated) {
         sessionStorage.setItem('admin_password', password);
+        api.setAdminPassword(password);
         setIsAuthenticated(true);
       } else {
         setAuthError('Invalid password');

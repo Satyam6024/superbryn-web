@@ -8,6 +8,9 @@ import {
   RoomEvent,
   ConnectionState as LKConnectionState,
   RemoteParticipant,
+  Track,
+  RemoteTrack,
+  RemoteTrackPublication,
 } from 'livekit-client';
 import { useConversation } from '../context/ConversationContext';
 import { api } from '../services/api';
@@ -147,6 +150,22 @@ export function useLiveKit(): UseLiveKitReturn {
 
       newRoom.on(RoomEvent.ParticipantConnected, (participant) => {
         console.log('Participant connected:', participant.identity);
+      });
+
+      // Handle remote audio tracks from the agent
+      newRoom.on(RoomEvent.TrackSubscribed, (track: RemoteTrack, _publication: RemoteTrackPublication, participant: RemoteParticipant) => {
+        console.log('Track subscribed:', track.kind, 'from', participant.identity);
+        if (track.kind === Track.Kind.Audio) {
+          const audioElement = track.attach();
+          document.body.appendChild(audioElement);
+          audioElement.play().catch(e => console.error('Audio play failed:', e));
+          console.log('Audio track attached and playing');
+        }
+      });
+
+      newRoom.on(RoomEvent.TrackUnsubscribed, (track: RemoteTrack) => {
+        console.log('Track unsubscribed:', track.kind);
+        track.detach().forEach(el => el.remove());
       });
 
       // Connect to the room
